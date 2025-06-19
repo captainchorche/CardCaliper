@@ -1,80 +1,84 @@
-# CardCaliper - Индикатор для штангенциркулей
+# CardCaliper - Digital Caliper Reader
+
+**🌍 Languages:** [English](README.md) | [Русский](README_RU.md) | [Italiano](README_IT.md) | [Español](README_ES.md)
 
 ![M5Stack Cardputer](https://img.shields.io/badge/Hardware-M5Stack%20Cardputer-blue)
 ![ESP32-S3](https://img.shields.io/badge/MCU-ESP32--S3-green)
 ![PlatformIO](https://img.shields.io/badge/Platform-PlatformIO-orange)
 ![Version](https://img.shields.io/badge/Version-2.0.0-brightgreen)
 
-Цифровой индикатор для штангенциркулей (или других измерительных приборов) с SPC выходом на базе M5Stack Cardputer. Проект предоставляет считывание измерений с возможностью передачи данных через BLE, WiFi и веб-интерфейс.
+Digital reader for calipers (or other measuring instruments) with SPC output based on M5Stack Cardputer. The project provides measurement reading with data transmission capabilities via BLE, WiFi, and web interface.
 
-Этот проект частично основан на проекте [EspDRO](https://github.com/MGX3D/EspDRO) Marius G MGX3D.
+This project is partially based on [EspDRO](https://github.com/MGX3D/EspDRO) project by Marius G MGX3D.
 
-## 🎯 Основные возможности
+## 🎯 Key Features
 
-### 🔗 Режимы работы
-- кнопка **1** - **BLE Keyboard**: эмуляция bluetooth-клавиатуры для прямого ввода, (кнопка **enter(ok)** для отправки данных в поле ввода)
-- кнопка **2** - **WiFi AP**: создание собственной точки доступа
-- кнопка **3** - **WiFi STA**: подключение к домашней сети (при неудачной попытке подключения автоматический переход в режим AP)
-- кнопка **4** - **Режим OFF**: отключение беспроводных модулей  
+### 🔗 Operating Modes
+- **Button 1** - **BLE Keyboard**: Bluetooth keyboard emulation for direct input (press **enter(ok)** button to send data to input field)
+- **Button 2** - **WiFi AP**: Create own access point
+- **Button 3** - **WiFi STA**: Connect to home network (automatically switches to AP mode if connection fails)
+- **Button 4** - **OFF Mode**: Disable wireless modules
 
-### 🌐 Веб-интерфейс
-  SSID: `CardCaliper` (defaultSSID AP mode)
+### 🌐 Web Interface
+  SSID: `CardCaliper` (default SSID AP mode)
 
-  Пароль: `Caliper123` (defaultPASSWORD AP mode)
+  Password: `Caliper123` (default PASSWORD AP mode)
 
   URL: `http://cardcaliper.local`
-- **PWA**: установка как приложение (добавить на экран "домой")
-- **Риалтайм**: WebSocket обновления без задержек
-- **Сохранение данных**: клик по измерению или enter (desktop) для сохранения в таблицу
-- **Копирование в клипборд**: тап или клип по измерению (desktop) для сохранения в таблицу
-- **Удаление данных**: свайп по измерению в таблице или кнопкой с эмодзи корзины (удаление всех измерений)
-- **Экспорт CSV**: загрузка сохраненных измерений в формате таблицы
+- **PWA**: Install as app (add to home screen)
+- **Real-time**: WebSocket updates without delays
+- **Data saving**: Click on measurement or enter (desktop) to save to table
+- **Copy to clipboard**: Tap or click on measurement (desktop) to copy to clipboard
+- **Data deletion**: Swipe measurement in table or trash emoji button (delete all measurements)
+- **CSV export**: Download saved measurements in table format
 
-  Страница настроек (также можно изменить в user_config.h):
-- **WiFi STA**: SSID и пароль домашней сети
-- **WiFi AP**: настройки точки доступа
-- **Множитель калибровки**: коррекция для разных штангенциркулей
-- **mDNS имя**: имя устройства в сети
+  Settings page (can also be changed in user_config.h):
+- **WiFi STA**: Home network SSID and password
+- **WiFi AP**: Access point settings
+- **Calibration multiplier**: Correction for different calipers
+- **mDNS name**: Device name on network
 
-## 🔧 Сборка
-### Требования
+## 🔧 Build
+
+### Requirements
 - M5Stack Cardputer
-- Цифровой штангенциркуль с SPC выходом
-- PlatformIO IDE или PlatformIO Core
-- Соединительные провода
-- В отсутствии лишнего разъема HY2.0-4P(grove port) и 3D принтера,
- я припаял штырьковые разъемы(DuPont). 3pin идеально подходит в SPC разъем штангенциркуля, a 4pin вместо grove порта cardputer.
- Но если у вас есть подходящий разъем, то используйте его вместе с [напечатанной моделью разъема под штангенциркуль](https://github.com/MGX3D/EspDRO/blob/master/CAD/spc_connector.stl).
+- Digital caliper with SPC output
+- PlatformIO IDE or PlatformIO Core
+- Connecting wires
+- In absence of spare HY2.0-4P connector (grove port) and 3D printer,
+ I soldered pin headers (DuPont). 3-pin fits perfectly into SPC connector of caliper, and 4-pin instead of grove port on cardputer.
+ But if you have suitable connector, use it with [printed caliper connector model](https://github.com/MGX3D/EspDRO/blob/master/CAD/spc_connector.stl).
 
-### Подключение штангенциркуля к Cardputer
+### Connecting Caliper to Cardputer
 
 ```
-| Grove (Cardputer) | SPC (штангенциркуль) |
+| Grove (Cardputer) | SPC (Caliper)        |
 |-------------------|----------------------|
 | GND               | GND                  |
 | G2 (GPIO2)        | Data                 |
 | G1 (GPIO1)        | Clock                |
 ```
 
-## ⬇️ Установка и прошивка
+## ⬇️ Installation and Flashing
 
 ```bash
-# Собрать и прошить
+# Build and flash
 pio run --target upload
 
-# Загрузить веб-интерфейс
+# Upload web interface
 pio run --target uploadfs
 ```
-## ⬇️ Быстрая прошивка
 
-Готовая прошивка также доступна на M5Burner 
+## ⬇️ Quick Flashing
 
-## 📄 Лицензия
+Ready firmware is also available on M5Burner
 
-MIT License - см. файл [LICENSE](LICENSE)
+## 📄 License
 
-## 🏆 Благодарности
+MIT License - see [LICENSE](LICENSE) file
 
-- Marius G (MGX3D) за то что реализовал считываение данных без использования преобразователей логических уровней
-- ИИ за реализацию кода посредством идиотских запросов
-- Всем причастным к написанию использованных библиотек
+## 🏆 Acknowledgments
+
+- Marius G (MGX3D) for implementing data reading without using logic level converters
+- AI for code implementation through idiotic requests
+- Everyone involved in writing the used libraries
