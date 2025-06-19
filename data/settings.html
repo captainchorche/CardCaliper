@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>CardCaliper - Settings</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="stylesheet" href="/style.css?v=25">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">CardCaliper Settings</h1>
+            <div class="status">Configure your preferences</div>
+        </header>
+        
+        <main class="main">
+            <div class="settings-form">
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Caliper Settings</h3>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-text">Caliper Multiplier</span>
+                        </label>
+                        <input type="number" id="caliperMultiplier" class="setting-input" step="0.1" min="0.1" max="100">
+                        <div class="setting-description">Multiplier for converting raw data to microns (usually 1.0 or 10.0)</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="settings-section-title">WiFi Access Point Settings</h3>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-text">AP SSID</span>
+                        </label>
+                        <input type="text" id="apSSID" class="setting-input" maxlength="32">
+                        <div class="setting-description">Network name when device acts as access point</div>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-text">AP Password</span>
+                        </label>
+                        <input type="text" id="apPassword" class="setting-input" maxlength="64">
+                        <div class="setting-description">Password for access point (minimum 8 characters)</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="settings-section-title">WiFi Station Settings</h3>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-text">Home WiFi SSID</span>
+                        </label>
+                        <input type="text" id="staSSID" class="setting-input" maxlength="32">
+                        <div class="setting-description">Your home WiFi network name</div>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-text">Home WiFi Password</span>
+                        </label>
+                        <input type="text" id="staPassword" class="setting-input" maxlength="64">
+                        <div class="setting-description">Your home WiFi password</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Network Settings</h3>
+
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <span class="setting-text">mDNS Hostname</span>
+                        </label>
+                        <input type="text" id="mdnsHostname" class="setting-input" maxlength="32" pattern="[a-zA-Z0-9-]+">
+                        <div class="setting-description">Device hostname (access via http://hostname.local)</div>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="controls">
+                <button class="btn btn-primary" onclick="saveAndBack()">
+                    💾 Save
+                </button>
+                <button class="btn btn-secondary" onclick="goBack()">
+                    ← Back
+                </button>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Settings management
+        class SettingsManager {
+            constructor() {
+                this.settings = {
+                    // Device settings
+                    caliperMultiplier: 10.0,
+                    apSSID: "CardCaliper",
+                    apPassword: "Caliper123",
+                    staSSID: "",
+                    staPassword: "",
+                    mdnsHostname: "cardcaliper"
+                };
+                this.loadSettings();
+                this.initializeForm();
+            }
+
+            async loadSettings() {
+                try {
+                    // Load device settings from server
+                    const response = await fetch('/api/settings');
+                    if (response.ok) {
+                        const deviceSettings = await response.json();
+                        this.settings = { ...this.settings, ...deviceSettings };
+                    }
+
+
+                } catch (error) {
+                    console.error('Failed to load settings:', error);
+                }
+            }
+
+            async saveSettings() {
+                try {
+                    // Save device settings to server
+                    const response = await fetch('/api/settings', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(this.settings)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to save device settings');
+                    }
+
+                    return true;
+                } catch (error) {
+                    console.error('Failed to save settings:', error);
+                    return false;
+                }
+            }
+
+            initializeForm() {
+                // Initialize text inputs
+                ['caliperMultiplier', 'apSSID', 'apPassword', 'staSSID', 'staPassword', 'mdnsHostname'].forEach(key => {
+                    const input = document.getElementById(key);
+                    if (input) {
+                        input.value = this.settings[key];
+                        input.addEventListener('input', (e) => {
+                            if (key === 'caliperMultiplier') {
+                                this.settings[key] = parseFloat(e.target.value) || 1.0;
+                            } else {
+                                this.settings[key] = e.target.value;
+                            }
+                        });
+                    }
+                });
+            }
+
+            validateSettings() {
+                // Validate caliper multiplier
+                if (this.settings.caliperMultiplier <= 0) {
+                    alert('Caliper multiplier must be greater than 0');
+                    return false;
+                }
+
+                // Validate AP password length
+                if (this.settings.apPassword.length < 8) {
+                    alert('AP password must be at least 8 characters long');
+                    return false;
+                }
+
+                // Validate mDNS hostname
+                const hostnameRegex = /^[a-zA-Z0-9-]+$/;
+                if (!hostnameRegex.test(this.settings.mdnsHostname)) {
+                    alert('mDNS hostname can only contain letters, numbers, and hyphens');
+                    return false;
+                }
+
+                return true;
+            }
+
+            async save() {
+                if (!this.validateSettings()) {
+                    return false;
+                }
+                return await this.saveSettings();
+            }
+        }
+        
+        // Initialize settings manager
+        let settingsManager;
+        document.addEventListener('DOMContentLoaded', async () => {
+            settingsManager = new SettingsManager();
+            await settingsManager.loadSettings();
+            settingsManager.initializeForm();
+        });
+
+        // Navigation functions
+        async function saveAndBack() {
+            if (!settingsManager) {
+                alert('Settings manager not initialized');
+                return;
+            }
+
+            const btn = event.target;
+            const originalText = btn.textContent;
+
+            // Show saving state
+            btn.textContent = '💾 Saving...';
+            btn.disabled = true;
+
+            try {
+                const success = await settingsManager.save();
+                if (success) {
+                    // Show success feedback
+                    btn.textContent = '✅ Saved!';
+                    btn.style.background = 'var(--success)';
+
+                    setTimeout(() => {
+                        // Show restart message for device settings
+                        if (confirm('Settings saved! Device will restart to apply changes. Continue?')) {
+                            // Trigger device restart
+                            fetch('/api/restart', { method: 'POST' })
+                                .then(() => {
+                                    // Redirect after restart
+                                    setTimeout(() => {
+                                        window.location.href = '/?v=' + Date.now();
+                                    }, 3000);
+                                })
+                                .catch(() => {
+                                    // Fallback redirect
+                                    window.location.href = '/?v=' + Date.now();
+                                });
+                        } else {
+                            window.location.href = '/?v=' + Date.now();
+                        }
+                    }, 1000);
+                } else {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    alert('Failed to save settings');
+                }
+            } catch (error) {
+                console.error('Save error:', error);
+                btn.textContent = originalText;
+                btn.disabled = false;
+                alert('Failed to save settings: ' + error.message);
+            }
+        }
+
+        function goBack() {
+            // Add cache busting parameter
+            window.location.href = '/?v=' + Date.now();
+        }
+    </script>
+</body>
+</html>

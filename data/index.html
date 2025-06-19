@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>CardCaliper</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="stylesheet" href="/style.css?v=25">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">CardCaliper v2.0</h1>
+            <div class="status" id="status">Connecting...</div>
+        </header>
+
+        <main class="main">
+            <div class="measurement-display" onclick="saveMeasurement()">
+                <div class="measurement" id="measurement">---.--</div>
+                <div class="unit">mm</div>
+            </div>
+
+            <div class="measurements-table">
+                    <div class="table-header">
+                        <h3>Saved Measurements</h3>
+                        <div class="table-buttons">
+                            <button class="btn btn-download" onclick="downloadCSV()">📥</button>
+                            <button class="btn btn-clear" onclick="clearMeasurements()">🗑</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <div class="table-content" id="measurementsTable">
+                            <div class="empty-state">
+                                <div class="empty-icon">📏</div>
+                                <div class="empty-text">No measurements saved yet</div>
+                                <div class="empty-hint">Click on measurement or press Enter to save</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+
+        <footer class="footer">
+            <div class="controls">
+                <button class="btn btn-secondary" onclick="location.reload()">
+                    🔄 Refresh
+                </button>
+                <button class="btn btn-secondary" onclick="openSettings()">
+                    ⚙️ Settings
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/app.js?v=7"></script>
+
+    <!-- Settings function -->
+    <script>
+        function openSettings() {
+            window.location.href = '/settings.html?v=' + Date.now();
+        }
+    </script>
+</body>
+</html>
