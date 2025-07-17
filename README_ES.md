@@ -1,4 +1,4 @@
-# CardCaliper - Lector Digital para Calibres
+# CardCaliper - Indicador para Calibradores
 
 **🌍 Idiomas:** [English](README.md) | [Русский](README_RU.md) | [Italiano](README_IT.md) | [Español](README_ES.md)
 
@@ -7,52 +7,52 @@
 ![PlatformIO](https://img.shields.io/badge/Platform-PlatformIO-orange)
 ![Version](https://img.shields.io/badge/Version-2.0.0-brightgreen)
 
-Lector digital para calibres (u otros instrumentos de medición) con salida SPC basado en M5Stack Cardputer. El proyecto proporciona lectura de mediciones con capacidades de transmisión de datos a través de BLE, WiFi e interfaz web.
+Un indicador digital para calibradores (u otros instrumentos de medición) con salida SPC basado en el M5Stack Cardputer. El proyecto proporciona lectura de mediciones con la capacidad de transmitir datos a través de BLE, WiFi y una interfaz web.
 
-Este proyecto está parcialmente basado en el proyecto [EspDRO](https://github.com/MGX3D/EspDRO) de Marius G MGX3D.
+Este proyecto se basa parcialmente en el proyecto [EspDRO](https://github.com/MGX3D/EspDRO) de Marius G MGX3D.
 
 ## 🎯 Características Principales
 
 ### 🔗 Modos de Operación
-- **Botón 1** - **BLE Keyboard**: Emulación de teclado Bluetooth para entrada directa (presionar **enter(ok)** para enviar datos al campo de entrada)
-- **Botón 2** - **WiFi AP**: Crear propio punto de acceso
-- **Botón 3** - **WiFi STA**: Conectar a red doméstica (cambia automáticamente al modo AP si falla la conexión)
-- **Botón 4** - **Modo OFF**: Deshabilitar módulos inalámbricos
+- **Botón 1** - **Teclado BLE**: emula un teclado Bluetooth para entrada directa (presione **enter(ok)** para enviar datos al campo de entrada)
+- **Botón 2** - **WiFi AP**: crea su propio punto de acceso
+- **Botón 3** - **WiFi STA**: se conecta a una red doméstica (cambia automáticamente al modo AP si la conexión falla)
+- **Botón 4** - **Modo OFF**: deshabilita los módulos inalámbricos
 
 ### 🌐 Interfaz Web
-  SSID: `CardCaliper` (SSID predeterminado modo AP)
+  SSID: `CardCaliper` (SSID predeterminado en modo AP)
 
-  Contraseña: `Caliper123` (CONTRASEÑA predeterminada modo AP)
+  Contraseña: `Caliper123` (contraseña predeterminada en modo AP)
 
   URL: `http://cardcaliper.local`
-- **PWA**: Instalar como aplicación (agregar a pantalla de inicio)
-- **Tiempo real**: Actualizaciones WebSocket sin retrasos
-- **Guardado de datos**: Hacer clic en medición o enter (escritorio) para guardar en tabla
-- **Copiar al portapapeles**: Tocar o hacer clic en medición (escritorio) para copiar al portapapeles
-- **Eliminación de datos**: Deslizar medición en tabla o botón emoji papelera (eliminar todas las mediciones)
-- **Exportación CSV**: Descargar mediciones guardadas en formato tabla
+- **PWA**: instalar como una aplicación (agregar a la pantalla de inicio)
+- **Tiempo real**: actualizaciones de WebSocket sin demora
+- **Guardado de Datos**: haga clic en una medición o presione enter (escritorio) para guardarla en la tabla
+- **Copiar al Portapapeles**: toque o haga clic (escritorio) en una medición para copiarla
+- **Eliminación de Datos**: deslice el dedo sobre una medición en la tabla o use el botón con el emoji de la papelera (elimina todas las mediciones)
+- **Exportar a CSV**: descargue las mediciones guardadas en formato de tabla
 
   Página de configuración (también se puede cambiar en user_config.h):
-- **WiFi STA**: SSID y contraseña de red doméstica
-- **WiFi AP**: Configuración de punto de acceso
-- **Multiplicador de calibración**: Corrección para diferentes calibres
-- **Nombre mDNS**: Nombre del dispositivo en la red
+- **WiFi STA**: SSID y contraseña de la red doméstica
+- **WiFi AP**: configuración del punto de acceso
+- **Multiplicador de Calibración**: corrección para diferentes calibradores
+- **Nombre mDNS**: nombre del dispositivo en la red
 
-## 🔧 Construcción
-
+## 🔧 Ensamblaje
 ### Requisitos
 - M5Stack Cardputer
-- Calibre digital con salida SPC
+- Calibrador digital con salida SPC
 - PlatformIO IDE o PlatformIO Core
 - Cables de conexión
-- En ausencia de conector HY2.0-4P de repuesto (puerto grove) e impresora 3D,
- soldé headers de pines (DuPont). El 3-pin encaja perfectamente en el conector SPC del calibre, y el 4-pin en lugar del puerto grove en cardputer.
- Pero si tienes un conector adecuado, úsalo con el [modelo de conector de calibre impreso](https://github.com/MGX3D/EspDRO/blob/master/CAD/spc_connector.stl).
+- A falta de un conector HY2.0-4P de repuesto (puerto grove) y una impresora 3D,
+ soldé conectores de pines DuPont. Un conector de 3 pines encaja perfectamente en el conector SPC del calibrador, y un conector de 4 pines reemplaza el puerto grove del Cardputer.
+ Pero si tiene un conector adecuado, úselo con el [modelo de conector de calibrador impreso](https://github.com/MGX3D/EspDRO/blob/master/CAD/spc_connector.stl).
 
-### Conexión de Calibre a Cardputer
+### Conexión del Calibrador al Cardputer
+![alt text](images/Pinout.png)
 
 ```
-| Grove (Cardputer) | SPC (Calibre)        |
+| Grove (Cardputer) | SPC (calibrador)     |
 |-------------------|----------------------|
 | GND               | GND                  |
 | G2 (GPIO2)        | Data                 |
@@ -62,23 +62,22 @@ Este proyecto está parcialmente basado en el proyecto [EspDRO](https://github.c
 ## ⬇️ Instalación y Flasheo
 
 ```bash
-# Construir y flashear
+# Compilar y flashear
 pio run --target upload
 
 # Subir interfaz web
 pio run --target uploadfs
 ```
-
 ## ⬇️ Flasheo Rápido
 
-El firmware listo también está disponible en M5Burner
+Un firmware precompilado también está disponible en M5Burner
 
 ## 📄 Licencia
 
-MIT License - ver archivo [LICENSE](LICENSE)
+Licencia MIT - consulte el archivo [LICENSE](LICENSE)
 
 ## 🏆 Agradecimientos
 
 - Marius G (MGX3D) por implementar la lectura de datos sin usar convertidores de nivel lógico
-- IA por la implementación del código a través de solicitudes idiotas
-- Todos los involucrados en escribir las librerías utilizadas
+- IA por implementar el código a través de solicitudes idiotas
+- Todos los involucrados en la escritura de las bibliotecas utilizadas
