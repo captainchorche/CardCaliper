@@ -1,4 +1,5 @@
-# CardCaliper - Indicatore per Calibri
+
+# CardCaliper - Indicatore per calibri
 
 **🌍 Lingue:** [English](README.md) | [Русский](README_RU.md) | [Italiano](README_IT.md) | [Español](README_ES.md)
 
@@ -7,36 +8,39 @@
 ![PlatformIO](https://img.shields.io/badge/Platform-PlatformIO-orange)
 ![Version](https://img.shields.io/badge/Version-2.0.0-brightgreen)
 
-Un indicatore digitale per calibri (o altri strumenti di misurazione) con un'uscita SPC basata su M5Stack Cardputer. Il progetto fornisce la lettura delle misurazioni con la possibilità di trasmettere dati tramite BLE, WiFi e un'interfaccia web.
+Indicatore digitale per calibri (o altri strumenti di misura) con uscita SPC basato su M5Stack Cardputer. Il progetto consente la lettura delle misurazioni con la possibilità di trasferire i dati tramite BLE, WiFi e interfaccia web.
 
-Questo progetto è parzialmente basato sul progetto [EspDRO](https://github.com/MGX3D/EspDRO) di Marius G MGX3D.
+Questo progetto è parzialmente basato su [EspDRO](https://github.com/MGX3D/EspDRO) di Marius G MGX3D.
 
-## 🎯 Caratteristiche Principali
+## 🎯 Caratteristiche principali
 
-### 🔗 Modalità Operative
-- **Pulsante 1** - **Tastiera BLE**: emula una tastiera Bluetooth per l'input diretto (premere **invio(ok)** per inviare i dati al campo di input)
-- **Pulsante 2** - **WiFi AP**: crea il proprio punto di accesso
-- **Pulsante 3** - **WiFi STA**: si connette a una rete domestica (passa automaticamente alla modalità AP se la connessione fallisce)
-- **Pulsante 4** - **Modalità OFF**: disabilita i moduli wireless
+[YouTubeLink](https://www.youtube.com/shorts/dYnquSnqz-o)
 
-### 🌐 Interfaccia Web
-  SSID: `CardCaliper` (SSID predefinito in modalità AP)
+![alt text](images/CardCaliperGIF.gif)
+### 🔗 Modalità operative
+- pulsante **1** - **BLE Keyboard**: emulazione tastiera bluetooth per input diretto, (pulsante **enter(ok)** per inviare i dati al campo di input)
+- pulsante **2** - **WiFi AP**: crea un proprio punto di accesso
+- pulsante **3** - **WiFi STA**: connessione alla rete domestica (in caso di fallimento della connessione, passa automaticamente alla modalità AP)
+- pulsante **4** - **Modalità OFF**: disattiva i moduli wireless  
 
-  Password: `Caliper123` (password predefinita in modalità AP)
+### 🌐 Interfaccia web
+  SSID: `CardCaliper` (defaultSSID modalità AP)
+
+  Password: `Caliper123` (defaultPASSWORD modalità AP)
 
   URL: `http://cardcaliper.local`
-- **PWA**: installa come applicazione (aggiungi alla schermata principale)
-- **In tempo reale**: aggiornamenti WebSocket senza ritardi
-- **Salvataggio dati**: fare clic su una misurazione o premere invio (desktop) per salvarla nella tabella
-- **Copia negli appunti**: toccare o fare clic (desktop) su una misurazione per copiarla
-- **Eliminazione dati**: scorrere su una misurazione nella tabella o utilizzare il pulsante con l'emoji del cestino (elimina tutte le misurazioni)
-- **Esportazione CSV**: scarica le misurazioni salvate in formato tabella
+- **PWA**: installa come app (aggiungi alla schermata home)
+- **Realtime**: aggiornamenti WebSocket senza ritardi
+- **Salvataggio dati**: clic sulla misurazione o enter (desktop) per salvare nella tabella
+- **Copia negli appunti**: tocca o clicca (desktop) sulla misurazione per salvare nella tabella
+- **Elimina dati**: swipe sulla misurazione nella tabella o usa il pulsante emoji cestino (elimina tutte le misurazioni)
+- **Esporta CSV**: scarica le misurazioni salvate in formato tabella
 
   Pagina delle impostazioni (può essere modificata anche in user_config.h):
 - **WiFi STA**: SSID e password della rete domestica
-- **WiFi AP**: impostazioni del punto di accesso
-- **Moltiplicatore di calibrazione**: correzione per calibri diversi
-- **Nome mDNS**: nome del dispositivo sulla rete
+- **WiFi AP**: impostazioni punto di accesso
+- **Moltiplicatore di calibrazione**: correzione per diversi calibri
+- **Nome mDNS**: nome del dispositivo in rete
 
 ## 🔧 Assemblaggio
 ### Requisiti
@@ -44,40 +48,40 @@ Questo progetto è parzialmente basato sul progetto [EspDRO](https://github.com/
 - Calibro digitale con uscita SPC
 - PlatformIO IDE o PlatformIO Core
 - Fili di collegamento
-- In assenza di un connettore HY2.0-4P di riserva (porta grove) e di una stampante 3D,
- ho saldato dei connettori a pin DuPont. Un connettore a 3 pin si adatta perfettamente al connettore SPC del calibro, e un connettore a 4 pin sostituisce la porta grove del Cardputer.
- Ma se si dispone di un connettore adatto, utilizzarlo con il [modello di connettore per calibro stampato](https://github.com/MGX3D/EspDRO/blob/master/CAD/spc_connector.stl).
+- Se non hai un connettore HY2.0-4P (porta grove) e una stampante 3D,
+  ho saldato pin DuPont. Il 3 pin si adatta perfettamente al connettore SPC del calibro, e il 4 pin invece della porta grove del cardputer.
+  Ma se hai un connettore adatto, usalo insieme al [modello stampato del connettore per calibro](https://github.com/MGX3D/EspDRO/blob/master/CAD/spc_connector.stl).
 
-### Collegamento del Calibro al Cardputer
+### Collegamento del calibro al Cardputer
 ![alt text](images/Pinout.png)
 
 ```
-| Grove (Cardputer) | SPC (calibro)        |
-|-------------------|----------------------|
-| GND               | GND                  |
-| G2 (GPIO2)        | Data                 |
-| G1 (GPIO1)        | Clock                |
+| Grove (Cardputer) | SPC (calibro) |
+|-------------------|---------------|
+| GND               | GND           |
+| G2 (GPIO2)        | Data          |
+| G1 (GPIO1)        | Clock         |
 ```
 
-## ⬇️ Installazione e Flashing
+## ⬇️ Installazione e flash
 
 ```bash
 # Compila e flasha
 pio run --target upload
 
-# Carica l'interfaccia web
+# Carica interfaccia web
 pio run --target uploadfs
 ```
-## ⬇️ Flashing Rapido
+## ⬇️ Flash veloce
 
-Un firmware precompilato è disponibile anche su M5Burner
+Il firmware pronto è disponibile anche su M5Burner
 
 ## 📄 Licenza
 
-Licenza MIT - vedere il file [LICENSE](LICENSE)
+Licenza MIT - vedi [LICENSE](LICENSE)
 
 ## 🏆 Ringraziamenti
 
-- Marius G (MGX3D) per aver implementato la lettura dei dati senza utilizzare convertitori di livello logico
-- IA per aver implementato il codice tramite richieste idiote
-- Tutti coloro che sono stati coinvolti nella scrittura delle librerie utilizzate
+- Marius G (MGX3D) per aver implementato la lettura dei dati senza convertitori di livello logico
+- IA per l'implementazione del codice tramite richieste idiote
+- Tutti coloro che hanno contribuito alla scrittura delle librerie utilizzate
