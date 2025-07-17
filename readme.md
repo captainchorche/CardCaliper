@@ -1,6 +1,6 @@
 # CardCaliper - Indicator for Calipers
 
-**🌍 Languages:** [English](README.md) | [Русский](README_RU.md) | [Italiano](README_IT.md) | [Español](README_ES.md)
+**🌍 Languages:** [English](readme.md) | [Русский](README_RU.md) | [Italiano](README_IT.md) | [Español](README_ES.md)
 
 ![M5Stack Cardputer](https://img.shields.io/badge/Hardware-M5Stack%20Cardputer-blue)
 ![ESP32-S3](https://img.shields.io/badge/MCU-ESP32--S3-green)
