@@ -1,17 +1,3 @@
-# CardCaliper - Indicador para Calibradores
-
-**🌍 Idiomas:** [English](README.md) | [Русский](README_RU.md) | [Italiano](README_IT.md) | [Español](README_ES.md)
-
-![M5Stack Cardputer](https://img.shields.io/badge/Hardware-M5Stack%20Cardputer-blue)
-![ESP32-S3](https://img.shields.io/badge/MCU-ESP32--S3-green)
-![PlatformIO](https://img.shields.io/badge/Platform-PlatformIO-orange)
-![Version](https://img.shields.io/badge/Version-2.0.0-brightgreen)
-
-Un indicador digital para calibradores (u otros instrumentos de medición) con salida SPC basado en el M5Stack Cardputer. El proyecto proporciona lectura de mediciones con la capacidad de transmitir datos a través de BLE, WiFi y una interfaz web.
-
-Este proyecto se basa parcialmente en el proyecto [EspDRO](https://github.com/MGX3D/EspDRO) de Marius G MGX3D.
-
-
 # CardCaliper - Indicador para calibradores
 
 **🌍 Idiomas:** [English](README.md) | [Русский](README_RU.md) | [Italiano](README_IT.md) | [Español](README_ES.md)
